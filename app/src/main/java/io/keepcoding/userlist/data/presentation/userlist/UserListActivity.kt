@@ -1,9 +1,10 @@
-package io.keepcoding.userlist
+package io.keepcoding.userlist.data.presentation.userlist
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import io.keepcoding.userlist.R
 
-class MainActivity : AppCompatActivity() {
+class UserListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
