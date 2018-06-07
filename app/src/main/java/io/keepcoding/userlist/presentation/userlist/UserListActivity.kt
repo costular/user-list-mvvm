@@ -1,4 +1,4 @@
-package io.keepcoding.userlist.data.presentation.userlist
+package io.keepcoding.userlist.presentation.userlist
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
