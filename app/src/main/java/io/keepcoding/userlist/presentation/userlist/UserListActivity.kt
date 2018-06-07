@@ -33,6 +33,7 @@ class UserListActivity : AppCompatActivity() {
     private fun setUpViewModel() {
         userListViewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
         bindEvents()
+        userListViewModel.loadUserList()
     }
 
     private fun bindEvents() {
@@ -57,8 +58,4 @@ class UserListActivity : AppCompatActivity() {
         userListLoading.visibility = if(isLoading) View.VISIBLE else View.GONE
     }
 
-    override fun onResume() {
-        super.onResume()
-        userListViewModel.loadUserList()
-    }
 }

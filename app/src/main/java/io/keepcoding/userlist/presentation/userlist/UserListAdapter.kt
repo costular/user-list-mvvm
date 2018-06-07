@@ -14,7 +14,16 @@ import kotlinx.android.synthetic.main.item_user.view.*
 /**
  * Created by costular on 07/06/2018.
  */
-class UserListAdapter : ListAdapter<UserEntity, UserListAdapter.UserListViewHolder>(UserEntityDiff()) {
+class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
+
+    private val items: MutableList<UserEntity> = mutableListOf()
+
+    override fun getItemCount(): Int = items.size
+
+    fun submitList(items: List<UserEntity>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
@@ -22,7 +31,7 @@ class UserListAdapter : ListAdapter<UserEntity, UserListAdapter.UserListViewHold
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(items[position])
     }
 
     inner class UserListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

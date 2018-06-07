@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import io.keepcoding.userlist.data.model.UserEntity
 import io.keepcoding.userlist.data.repository.UserRepository
 import io.keepcoding.userlist.data.repository.datasource.UserFakeDataSource
+import io.keepcoding.userlist.presentation.servicelocator.Inject
 import io.keepcoding.userlist.util.mvvm.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -18,12 +19,8 @@ class UserListViewModel : BaseViewModel() {
     val userListState: MutableLiveData<List<UserEntity>> = MutableLiveData()
     val isLoadingState: MutableLiveData<Boolean> = MutableLiveData()
 
-    // TODO mejorar las dependencias (Service Locator)
-    private val fakeDataSource = UserFakeDataSource()
-    private val userRepository =  UserRepository(fakeDataSource)
-
     fun loadUserList() {
-        userRepository.getUserList()
+        Inject.userRepository.getUserList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { isLoadingState.postValue(true) }
