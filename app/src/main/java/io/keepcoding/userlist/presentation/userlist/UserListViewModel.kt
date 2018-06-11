@@ -31,6 +31,9 @@ class UserListViewModel : BaseViewModel() {
                         },
                         onError = {
 
+                        },
+                        onComplete = {
+                            Inject.settingsManager.firstLoad = false
                         }
                 )
                 .addTo(compositeDisposable)
