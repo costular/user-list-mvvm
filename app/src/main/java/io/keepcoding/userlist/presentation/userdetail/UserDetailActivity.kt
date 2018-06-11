@@ -1,7 +1,6 @@
 package io.keepcoding.userlist.presentation.userdetail
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -20,36 +19,26 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     lateinit var userDetailViewModel: UserDetailViewModel
-    var userId: Long = -1
+    var userEntity: UserEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
-        userId = intent.getLongExtra(PARAM_USER_ID, -1)
+        userEntity = intent.getParcelableExtra(PARAM_USER_ID)
         init()
     }
 
     private fun init() {
         userDetailViewModel = ViewModelProviders.of(this).get(UserDetailViewModel::class.java)
-        bindEvents()
         loadUserData()
     }
 
-    private fun bindEvents() {
-        userDetailViewModel.userState.observe(this, Observer {
-            it?.let {
-                onUserLoaded(it)
-            }
-        })
-    }
-
     private fun loadUserData() {
-        if (userId == -1L) {
+        if (userEntity == null) {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
-
-        userDetailViewModel.loadUserById(userId)
+        onUserLoaded(userEntity!!)
     }
 
     private fun onUserLoaded(userEntity: UserEntity) {

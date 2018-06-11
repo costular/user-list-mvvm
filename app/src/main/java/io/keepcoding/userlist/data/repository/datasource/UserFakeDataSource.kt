@@ -1,6 +1,7 @@
 package io.keepcoding.userlist.data.repository.datasource
 
 import io.keepcoding.userlist.data.model.UserEntity
+import io.reactivex.Flowable
 import io.reactivex.Observable
 
 /**
@@ -9,21 +10,12 @@ import io.reactivex.Observable
 class UserFakeDataSource : UserDataSource {
 
     val userList = listOf(
-            UserEntity(1, "Tyrone", "https://randomuser.me/api/portraits/men/40.jpg"),
-            UserEntity(2, "Eelis", "https://randomuser.me/api/portraits/men/24.jpg"),
-            UserEntity(3, "Isla", "https://randomuser.me/api/portraits/women/63.jpg"),
-            UserEntity(4, "Mathias", "https://randomuser.me/api/portraits/men/41.jpg")
+            UserEntity("Tyrone", "https://randomuser.me/api/portraits/men/40.jpg"),
+            UserEntity("Eelis", "https://randomuser.me/api/portraits/men/24.jpg"),
+            UserEntity("Isla", "https://randomuser.me/api/portraits/women/63.jpg"),
+            UserEntity("Mathias", "https://randomuser.me/api/portraits/men/41.jpg")
     )
 
-    override fun getUserList(): Observable<List<UserEntity>> =
-            Observable.just(userList)
-
-    override fun getUserDetail(userId: Long): Observable<UserEntity> {
-        val user = userList.find { it.userId == userId }
-        return if (user != null) {
-            Observable.just(user)
-        } else {
-            Observable.empty()
-        }
-    }
+    override fun getUserList(): Flowable<List<UserEntity>> =
+            Flowable.just(userList)
 }

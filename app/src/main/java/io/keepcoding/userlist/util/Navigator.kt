@@ -2,6 +2,7 @@ package io.keepcoding.userlist.util
 
 import android.app.Activity
 import android.content.Intent
+import io.keepcoding.userlist.data.model.UserEntity
 import io.keepcoding.userlist.presentation.userdetail.UserDetailActivity
 
 /**
@@ -9,9 +10,9 @@ import io.keepcoding.userlist.presentation.userdetail.UserDetailActivity
  */
 object Navigator {
 
-    fun openUserDetail(activity: Activity, userId: Long) {
+    fun openUserDetail(activity: Activity, userEntity: UserEntity) {
         val intent = Intent(activity, UserDetailActivity::class.java)
-        intent.putExtra(UserDetailActivity.PARAM_USER_ID, userId)
+        intent.putExtra(UserDetailActivity.PARAM_USER_ID, userEntity)
         activity.startActivity(intent)
     }
 
