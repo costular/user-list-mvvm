@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.item_user.view.*
 /**
  * Created by costular on 07/06/2018.
  */
-class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
+typealias OnUserClick = (userEntity: UserEntity) -> Unit
+class UserListAdapter(val onUserClick: OnUserClick)
+    : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
 
     private val items: MutableList<UserEntity> = mutableListOf()
 
@@ -44,6 +46,8 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
                         .load(userEntity.avatarUrl)
                         .into(userAvatar)
             }
+
+            itemView.setOnClickListener { onUserClick(userEntity) }
         }
 
     }

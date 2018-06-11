@@ -16,5 +16,4 @@ class SettingsManager(val sharedPreferences: SharedPreferences) {
     set(value) {
         sharedPreferences.edit().putBoolean(PREF_FIRST_LOAD, value).apply()
     }
-
 }
