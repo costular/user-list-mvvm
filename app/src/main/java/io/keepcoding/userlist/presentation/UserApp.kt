@@ -12,6 +12,7 @@ class UserApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Inject.initDatabase(this)
         Inject.settingsManager =
                 SettingsManager(PreferenceManager.getDefaultSharedPreferences(this))
     }
