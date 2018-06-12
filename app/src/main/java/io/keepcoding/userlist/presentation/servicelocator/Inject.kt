@@ -1,7 +1,6 @@
 package io.keepcoding.userlist.presentation.servicelocator
 
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import io.keepcoding.userlist.data.db.UserDatabase
 import io.keepcoding.userlist.data.mapper.UserEntityMapper
@@ -9,8 +8,6 @@ import io.keepcoding.userlist.data.net.UserService
 import io.keepcoding.userlist.data.repository.UserRepository
 import io.keepcoding.userlist.data.repository.datasource.ApiDataSource
 import io.keepcoding.userlist.data.repository.datasource.LocalDataSource
-import io.keepcoding.userlist.data.repository.datasource.UserDataSource
-import io.keepcoding.userlist.data.repository.datasource.UserFakeDataSource
 import io.keepcoding.userlist.util.SettingsManager
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -35,7 +32,6 @@ object Inject {
 
     lateinit var settingsManager: SettingsManager
 
-    val fakeDataSource = UserFakeDataSource()
     val apiDataSource = ApiDataSource(userService, userEntityMapper)
 
     lateinit var localDataSource: LocalDataSource

@@ -1,9 +1,8 @@
 package io.keepcoding.userlist.presentation.userlist
 
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import io.keepcoding.userlist.data.model.UserEntity
-import io.keepcoding.userlist.data.repository.UserRepository
-import io.keepcoding.userlist.data.repository.datasource.UserFakeDataSource
 import io.keepcoding.userlist.presentation.servicelocator.Inject
 import io.keepcoding.userlist.util.mvvm.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +29,7 @@ class UserListViewModel : BaseViewModel() {
                             userListState.value = it
                         },
                         onError = {
-
+                            Log.d("UserViewModel", it.toString())
                         },
                         onComplete = {
                             Inject.settingsManager.firstLoad = false

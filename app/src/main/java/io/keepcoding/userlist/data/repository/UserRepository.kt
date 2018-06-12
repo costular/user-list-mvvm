@@ -12,7 +12,13 @@ class UserRepository(private val localDataSource: LocalDataSource,
                      private val apiDataSource: ApiDataSource) {
 
     fun getUserList(): Flowable<List<UserEntity>> =
-            localDataSource.getUserList()
-                    .concatWith(apiDataSource.getUserList())
+            getUsersFromDb().concatWith(getUsersFromApi())
+
+
+    private fun getUsersFromDb(): Flowable<List<UserEntity>> = localDataSource.getUserList()
+
+    private fun getUsersFromApi(): Flowable<List<UserEntity>> =
+            apiDataSource.getUserList()
+                    .doOnNext { localDataSource.saveUsers(it) }
 
 }
