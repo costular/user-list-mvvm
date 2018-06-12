@@ -8,7 +8,7 @@ import io.keepcoding.userlist.presentation.userdetail.UserDetailActivity
 /**
  * Created by costular on 11/06/2018.
  */
-object Navigator {
+class Navigator {
 
     fun openUserDetail(activity: Activity, userEntity: UserEntity) {
         val intent = Intent(activity, UserDetailActivity::class.java)

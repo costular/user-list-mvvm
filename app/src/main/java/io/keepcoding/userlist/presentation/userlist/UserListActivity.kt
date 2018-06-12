@@ -1,6 +1,7 @@
 package io.keepcoding.userlist.presentation.userlist
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -10,21 +11,34 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import io.keepcoding.userlist.R
 import io.keepcoding.userlist.data.model.UserEntity
+import io.keepcoding.userlist.presentation.UserApp
 import io.keepcoding.userlist.presentation.userdetail.UserDetailActivity
 import io.keepcoding.userlist.util.Navigator
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class UserListActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var userListViewModel: UserListViewModel
 
     private val adapter = UserListAdapter { onUserClicked(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        inject()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUpRecycler()
         setUpViewModel()
+    }
+
+    private fun inject() {
+        (application as UserApp).component.inject(this)
     }
 
     private fun setUpRecycler() {
@@ -34,7 +48,7 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        userListViewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
+        userListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserListViewModel::class.java)
         bindEvents()
         userListViewModel.loadUserList()
     }
@@ -62,6 +76,6 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun onUserClicked(userEntity: UserEntity) {
-        Navigator.openUserDetail(this, userEntity)
+        navigator.openUserDetail(this, userEntity)
     }
 }

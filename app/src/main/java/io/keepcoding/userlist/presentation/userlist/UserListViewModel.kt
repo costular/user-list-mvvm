@@ -3,23 +3,26 @@ package io.keepcoding.userlist.presentation.userlist
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import io.keepcoding.userlist.data.model.UserEntity
-import io.keepcoding.userlist.presentation.servicelocator.Inject
+import io.keepcoding.userlist.data.repository.UserRepository
+import io.keepcoding.userlist.util.SettingsManager
 import io.keepcoding.userlist.util.mvvm.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Created by costular on 07/06/2018.
  */
-class UserListViewModel : BaseViewModel() {
+class UserListViewModel @Inject constructor(val userRepository: UserRepository,
+                                            val settingsManager: SettingsManager): BaseViewModel() {
 
     val userListState: MutableLiveData<List<UserEntity>> = MutableLiveData()
     val isLoadingState: MutableLiveData<Boolean> = MutableLiveData()
 
     fun loadUserList() {
-        Inject.userRepository.getUserList()
+        userRepository.getUserList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { isLoadingState.postValue(true) }
@@ -32,7 +35,7 @@ class UserListViewModel : BaseViewModel() {
                             Log.d("UserViewModel", it.toString())
                         },
                         onComplete = {
-                            Inject.settingsManager.firstLoad = false
+                            settingsManager.firstLoad = false
                         }
                 )
                 .addTo(compositeDisposable)

@@ -3,7 +3,10 @@ package io.keepcoding.userlist.presentation
 import android.app.Application
 import android.preference.PreferenceManager
 import com.facebook.stetho.Stetho
-import io.keepcoding.userlist.presentation.servicelocator.Inject
+import io.keepcoding.userlist.di.components.ApplicationComponent
+import io.keepcoding.userlist.di.components.DaggerApplicationComponent
+import io.keepcoding.userlist.di.modules.ApplicationModule
+import io.keepcoding.userlist.di.modules.DataModule
 import io.keepcoding.userlist.util.SettingsManager
 
 /**
@@ -11,12 +14,17 @@ import io.keepcoding.userlist.util.SettingsManager
  */
 class UserApp : Application() {
 
+    lateinit var component: ApplicationComponent
+
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
-        Inject.initDatabase(this)
-        Inject.settingsManager =
-                SettingsManager(PreferenceManager.getDefaultSharedPreferences(this))
+
+        // DI
+        component =
+                DaggerApplicationComponent.builder()
+                        .applicationModule(ApplicationModule(this))
+                        .build()
     }
 
 }
