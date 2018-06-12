@@ -20,7 +20,7 @@ class LocalDataSource(val userDatabase: UserDatabase) : UserDataSource {
 
     fun saveUsers(users: List<UserEntity>) {
         Observable.fromCallable {
-            userDatabase.getUserDao().insertAll(users)
+            userDatabase.getUserDao().removeAndInsertUsers(users)
         }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
