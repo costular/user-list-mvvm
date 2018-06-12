@@ -6,10 +6,12 @@ import io.keepcoding.userlist.di.modules.DataModule
 import io.keepcoding.userlist.di.modules.NetModule
 import io.keepcoding.userlist.presentation.userlist.UserListActivity
 import io.keepcoding.userlist.util.mvvm.ViewModelModule
+import javax.inject.Singleton
 
 /**
  * Created by costular on 12/06/2018.
  */
+@Singleton
 @Component(modules = [
     ApplicationModule::class,
     NetModule::class,

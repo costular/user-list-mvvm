@@ -10,11 +10,13 @@ import io.keepcoding.userlist.presentation.userdetail.UserDetailViewModel
 import io.keepcoding.userlist.presentation.userlist.UserListViewModel
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 /**
  * Created by costular on 12/06/2018.
  */
+@Singleton
 class ViewModelFactory @Inject constructor(
         private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>)
     : ViewModelProvider.Factory {
